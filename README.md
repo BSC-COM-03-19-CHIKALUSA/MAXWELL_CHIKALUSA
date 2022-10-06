@@ -11,3 +11,4 @@ your local machines and configure it according to the steps outlines below
            
         c) After filling in the variables and after the project has succefully installed the dependences, 
            you will be good to go. Hit that run button!
+# MAXWELL_CHIKALUSA
