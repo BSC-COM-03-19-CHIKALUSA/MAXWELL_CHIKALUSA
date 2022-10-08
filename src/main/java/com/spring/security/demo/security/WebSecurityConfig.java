@@ -26,6 +26,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     @Bean
@@ -36,6 +37,7 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/refresh-token").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/users").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/users").access("hasRole('ADMIN') and hasRole('EXECUTIVE')");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(tokenUtility()), UsernamePasswordAuthenticationFilter.class);
